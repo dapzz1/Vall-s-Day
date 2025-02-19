@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: pink;
+            margin: 50px;
+            transition: background-color 0.5s ease;
+            overflow: hidden;
+        }
+        h1 {
+            color: red;
+        }
+        p {
+            color: white;
+            font-size: 18px;
+            font-family: 'Candara', cursive;
+        }
+        .letter {
+            font-family: 'Arial', cursive;
+        }
+        .song-container a {
+            font-family: 'Candara', cursive;
+        }
+        .color-button {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .color-button:hover {
+            transform: scale(1.2);
+        }
+        .envelope {
+            position: relative;
+            width: 150px;
+            height: 100px;
+            background-color: #ff4d6d;
+            margin: 50px auto;
+            cursor: pointer;
+            transition: transform 0.5s;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .letter {
+            position: absolute;
+            width: 120px;
+            height: 80px;
+            background-color: white;
+            top: 10px;
+            text-align: center;
+            line-height: 80px;
+            font-size: 8px;
+            font-weight: bold;
+            transition: transform 0.5s, opacity 0.5s;
+            opacity: 0;
+        }
+        .open .letter {
+            transform: translateY(-50px);
+            opacity: 1;
+
+        }
+        .camera-container {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
+        .camera-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 28px;
+            transition: transform 0.3s ease;
+        
+    }
+    .camera-button:hover {
+        transform: scale(1.2);
+        
+    }
+    .photo-roll {
+            position: absolute;
+            top: 50px;
+            left: 15px;
+            width: 120px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            display: none;
+        }    
+        .photo-roll.show {
+            opacity: 1;
+            transform: scale(1);
+            display: block;
+        }
+
+        .camera-icon {
+            font-size: 24px;
+        }
+        .open .envelope {
+            background-color: #ff99aa;
+        }
+        .heart {
+            font-size: 50px;
+            color: red;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .heart:active {
+            transform: scale(1.5);
+        }
+        .flower {
+            position: absolute;
+            font-size: 20px;
+            color: yellow;
+            animation: float 3s ease-out;
+        }
+        @keyframes fall {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
+        .song-container {
+            margin-top: 30px;
+        }
+        .song-container a {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            color: blue;
+            text-decoration: none;
+            margin-top: 5px;
+        }
+        .song-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+        <script>
+            function showPhotoRoll() {
+                const photo = document.getElementById('photo-roll');
+                if (photo.classList.contains("show")) {
+                    photo.classList.remove("show");
+                    setTimeout(() => { photo.style.display = "none"; }, 500);
+                } else {
+                    photo.style.display = "block";
+                    setTimeout(() => { photo.classList.add("show"); }, 10);
+                }
+            }
+    </script>
+    <script>
+        function changeBackground(color) {
+            document.body.style.backgroundColor = color;
+            
+        }
+
+        function createHeart(x, y) {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.style.position = "absolute";
+            heart.style.left = x + "px";
+            heart.style.top = y + "px";
+            heart.style.fontSize = Math.random() * 20 + 20 + "px";
+            heart.style.opacity = Math.random();
+            heart.style.animation = "fall 3s linear";
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+
+        function createFallingHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.style.position = "absolute";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.top = "0px";
+            heart.style.fontSize = Math.random() * 20 + 20 + "px";
+            heart.style.opacity = Math.random();
+            heart.style.animation = "fall 5s linear";
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        document.addEventListener("click", function(event) {
+            createHeart(event.clientX, event.clientY);
+        });
+
+        setInterval(createFallingHeart, 500);
+
+        function openLetter() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.toggle('open');
+            if (envelope.classList.contains('open')) {
+                for (let i = 0; i < 10; i++) {
+                    createFlower();
+                }
+            }
+        }
+
+        function createFlower() {
+            const flower = document.createElement("div");
+            flower.innerHTML = "🌸";
+            flower.classList.add("flower");
+            flower.style.left = (Math.random() * 150 + 10) + "px";
+            flower.style.top = (Math.random() * 100 + 10) + "px";
+            document.getElementById("envelope").appendChild(flower);
+            setTimeout(() => {
+                flower.remove();
+            }, 3000);
+        }
+
+        function enlargeHeart(element) {
+            element.style.transform = element.style.transform === "scale(1.5)" ? "scale(1)" : "scale(1.5)";
+        }
+    </script>
+</head>
+<body>
+    <h1>💖 Happy Valentine Karinaa!💖</h1>
+    <p>Tetap Jadi Valentine Ku Terus yaa:)</p>
+    <button class="color-button" style="background-color: #ffcccc;" onclick="changeBackground('#ffcccc')"></button>
+    <button class="color-button" style="background-color: #ff99aa;" onclick="changeBackground('#ff99aa')"></button>
+    <button class="color-button" style="background-color: #ff6699;" onclick="changeBackground('#ff6699')"></button>
+    
+    <div id="envelope" class="envelope" onclick="openLetter()">
+        <div class="letter">Happy Valentine Sayangg 💕</div>
+    </div>
+
+    <div class="camera-container">
+        <button class="camera-button" onclick="showPhotoRoll()">📷</button>
+        <img id="photo-roll" class="photo-roll" src="Us.jpg" alt="Foto Kita">
+    </div>
+
+    <div class="heart" onclick="enlargeHeart(this)">❤️</div>
+
+    <div class="song-container">
+        <p>This song is for u sayangg</p>
+        <a href="https://youtu.be/IGqTw72o5wI?si=vuKXkPDw441S4GzL&t=5" target="_blank">Klik di sini beb </a>
+    </div>
+</body>
+
+</html>
